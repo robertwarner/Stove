@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 /**
  * Stove class. 
  *  
@@ -30,6 +31,16 @@ public class Stove {
 	 **** You must write the following method ****
 	 */
 	public void displayStove() {
+		boolean veryHotFlag = false;
+		for(Burner burner: burners) {
+			burner.display();
+			if(burner.myTemperature.getValue() == 3) {
+				veryHotFlag = true;
+			}
+		}
+		if(veryHotFlag) {
+			System.out.println("RED LIGHT -- HOT BURNER ALTERT");
+		}
 
 	}
 	

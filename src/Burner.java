@@ -1,6 +1,6 @@
 
 /**
- * Burner Class
+ * eBurner Class
  * 
  * @author Rob
  * @author Jo
@@ -9,8 +9,42 @@
 
 public class Burner {
 
-	enum Temperature {
-		BLAZING, HOT, WARM, COLD;
+	public enum Temperature {
+		BLAZING(3), HOT(2), WARM(1), COLD(0);
+		
+		private int value;
+		
+		private Temperature(int value) {
+			this.value = value;
+		}
+		
+		public int getValue() {
+			return this.value;
+		}
+		
+		
+		
+		@Override
+		public String toString() {
+			switch(value) {
+			case 0:
+				return "cooool";
+			case 1:
+				return "warm";
+			case 2:
+				return "CAREFUL";
+			case 3:
+				return "VERY HOT! DO NOT TOUCH";
+			default:
+				return "ERROR";
+				
+			
+			}
+		}
+		
+		
+		
+		
 	}
 
 	Temperature myTemperature;
@@ -26,10 +60,8 @@ public class Burner {
 	}
 
 	public void plusButton() {
-
-		if (timer != TIME_DURATION) {
-			timer += TIME_DURATION;
-		}
+		timer += TIME_DURATION;
+		
 
 		switch (this.mySetting) {
 		case HIGH:
@@ -50,6 +82,9 @@ public class Burner {
 	}
 
 	public void minusButton() {
+		timer += TIME_DURATION;
+		
+		
 		switch (this.mySetting) {
 		case HIGH:
 			this.mySetting = Setting.MEDIUM;
@@ -77,10 +112,10 @@ public class Burner {
 			finalTemp = Temperature.BLAZING;
 			break;
 		case LOW:
-			finalTemp = Temperature.HOT;
+			finalTemp = Temperature.WARM;
 			break;
 		case MEDIUM:
-			finalTemp = Temperature.WARM;
+			finalTemp = Temperature.HOT;
 			break;
 		case OFF:
 			finalTemp = Temperature.COLD;
@@ -92,7 +127,49 @@ public class Burner {
 		}
 		this.timer--;
 
-		if (this.timer == 0 && this.myTemperature != finalTemp) {
+		if (this.timer % 2 == 0 && this.myTemperature != finalTemp) {
+		//if (this.myTemperature != finalTemp) {
+			if (myTemperature.getValue() > finalTemp.getValue()) {
+				switch(myTemperature) {
+				case BLAZING:
+					this.myTemperature = Temperature.HOT;
+					break;
+				case COLD:
+					this.myTemperature = Temperature.COLD;
+					break;
+				case HOT:
+					this.myTemperature = Temperature.WARM;
+					break;
+				case WARM:
+					this.myTemperature = Temperature.COLD;
+					break;
+				default:
+					break;
+				
+				}
+			} else {
+				switch(myTemperature) {
+				case BLAZING:
+					this.myTemperature = Temperature.BLAZING;
+					break;
+				case COLD:
+					this.myTemperature = Temperature.WARM;
+					break;
+				case HOT:
+					this.myTemperature = Temperature.BLAZING;
+					break;
+				case WARM:
+					this.myTemperature = Temperature.HOT;
+					break;
+				default:
+					break;
+				
+				}
+				
+			}
+			if(this.myTemperature != finalTemp) {
+				this.timer = TIME_DURATION;
+			}
 			/****
 			 * 
 			 * This is the part that I am confused on! 
@@ -105,6 +182,7 @@ public class Burner {
 	}
 
 	public void display() {
+		System.out.println(this.mySetting.toString()+"....."+this.myTemperature.toString());
 
 	}
 
