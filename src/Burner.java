@@ -27,11 +27,10 @@ public class Burner {
 
 	public void plusButton() {
 
-		if(timer != TIME_DURATION) {
+		if (timer != TIME_DURATION) {
 			timer += TIME_DURATION;
 		}
 
-		
 		switch (this.mySetting) {
 		case HIGH:
 			break;
@@ -42,11 +41,10 @@ public class Burner {
 			this.mySetting = Setting.HIGH;
 			break;
 		case OFF:
-			this.mySetting = Setting.LOW; 
+			this.mySetting = Setting.LOW;
 			break;
 		default:
 			break;
-			
 
 		}
 	}
@@ -66,32 +64,44 @@ public class Burner {
 			break;
 		default:
 			break;
-			
+
 		}
 
 	}
 
 	public void updateTemperature() {
-		this.timer--;
-		if(this.timer == 0) {
-			switch(this.mySetting) {
-			case HIGH:
-				
-				break;
-			case LOW:
-				
-				break;
-			case MEDIUM:
-				break;
-			case OFF:
-				break;
-			default:
-				break;
-				
-			}
-			
+		Temperature finalTemp;
+
+		switch (this.mySetting) {
+		case HIGH:
+			finalTemp = Temperature.BLAZING;
+			break;
+		case LOW:
+			finalTemp = Temperature.HOT;
+			break;
+		case MEDIUM:
+			finalTemp = Temperature.WARM;
+			break;
+		case OFF:
+			finalTemp = Temperature.COLD;
+			break;
+		default:
+			finalTemp = Temperature.COLD;
+			break;
+
 		}
-		
+		this.timer--;
+
+		if (this.timer == 0 && this.myTemperature != finalTemp) {
+			/****
+			 * 
+			 * This is the part that I am confused on! 
+			 * We need to consider the temperature increasing and decreasing
+			 * 
+			 * 
+			 */
+		}
+
 	}
 
 	public void display() {
